@@ -121,7 +121,7 @@ If you don't have a designer on your project, or are not working with an accessi
 
 ### Resources
 - [Form Pattern Documentation - Primer](https://primer.style/product/ui-patterns/forms/)
-- [Structuring Accessible Forms - Rachel DiTullio](https://racheleditullio.com/blog/2021/09/structuring-accessible-forms/)
+- [Structuring Accessible Forms - Rachele DiTullio](https://racheleditullio.com/blog/2021/09/structuring-accessible-forms/)
 
 
 ---
