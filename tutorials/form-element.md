@@ -217,7 +217,7 @@ If additional information needs to be added to a Label, Hint, Legend, or any oth
 - [​Form pattern documentation - Primer](https://primer.style/product/ui-patterns/forms/)
 - [Forms Tutorial - W3C Web Accessibility Initiative](https://www.w3.org/WAI/tutorials/forms/)
 - [Create accessible forms - A11y Project](https://www.a11yproject.com/posts/how-to-write-accessible-forms/)
-- [Structuring Accessible Forms - Rachel DiTullio](https://racheleditullio.com/blog/2021/09/structuring-accessible-forms/)
+- [Structuring Accessible Forms - Rachele DiTullio](https://racheleditullio.com/blog/2021/09/structuring-accessible-forms/)
 - [Creating Accessible Forms - WebAIM](https://webaim.org/techniques/forms/controls)
 - [Don’t use the placeholder attribute - Smashing Magazine](https://www.smashingmagazine.com/2018/06/placeholder-attribute/)
 - [Provide helpful error messages - Harvard University](https://accessibility.huit.harvard.edu/provide-helpful-error-messages)
