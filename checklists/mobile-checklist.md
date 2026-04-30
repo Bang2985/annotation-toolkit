@@ -150,7 +150,7 @@ Use this section to verify each tier is used appropriately.
 
 ### Annotations that can help
 - [Touch gesture (User Interactions)](../tutorials/user-interactions.md#touch-gesture)
-- [User Interactions: Custom Action](https://gh.io/annotation-tutorial-user-interactions)
+- [User Interactions tutorial](https://gh.io/annotation-tutorial-user-interactions)
 
 ---
 
@@ -254,7 +254,7 @@ The [Platform function annotations](../tutorials/user-interactions.md#platform-f
 - [ ] **Loading states have clear visual and programmatic feedback**
 	- Use a live region announcement, not just a spinner. See [Mobile Live Region Announcement](../tutorials/mobile-annotations.md#mobile-live-region-announcement). Per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
 - [ ] **Automatic transitions are avoided or controllable**
-	- System-initiated screen, state, or content changes should be paused, slowed, or dismissable. Common offenders: onboarding carousels, auto-advancing tutorials. Per [SC 3.2.1 On Focus](https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html) and [SC 3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input.html).
+	- System-initiated screen, state, or content changes should be paused, slowed, or dismissible. Common offenders: onboarding carousels, auto-advancing tutorials. Per [SC 3.2.1 On Focus](https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html) and [SC 3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input.html).
 - [ ] **Opening external content is announced**
 	- "Opens in Safari", "Opens in browser", or "Opens in a new window" warnings prevent disorientation, especially when leaving an app for a web view.
 - [ ] **Time limits can be turned off, adjusted, or extended**
