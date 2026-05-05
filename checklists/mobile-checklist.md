@@ -6,7 +6,9 @@ Native mobile has its own set of accessibility patterns, APIs, and user expectat
 
 The one exception: if part of your app uses a **web view**, apply the web checklists to that content. Flag those areas with a [View Context Stamp](../tutorials/mobile-annotations.md#view-context-stamps-and-details) so the handoff is explicit. Examples of web view content are an in-app browser, an OAuth flow, embedded docs, or any HTML-rendered content.
 
-For per-interaction annotation guidance, pair this checklist with the [User Interactions tutorial](../tutorials/user-interactions.md) and the [Mobile annotations tutorial](../tutorials/mobile-annotations.md). The mobile annotations tutorial also includes a list of [design considerations](../tutorials/mobile-annotations.md#design-considerations) worth reviewing before you start annotating. For per-SC application notes when auditing, see the [Mobile-WCAG Mapping (Internal only)](https://github.com/github/accessibility-audit-guide/blob/main/mobile/mobile-wcag-map.md).
+For per-interaction guidance, pair this checklist with the [User Interactions tutorial](../tutorials/user-interactions.md) and the [Mobile annotations tutorial](../tutorials/mobile-annotations.md). Use these when you're specifying individual interactions or framing a design review. The mobile annotations tutorial also includes a list of [design considerations](../tutorials/mobile-annotations.md#design-considerations) that surface the right questions before you start annotating.
+
+For audit work, refer to the [Mobile-WCAG Mapping (Internal only)](https://github.com/github/accessibility-audit-guide/blob/main/mobile/mobile-wcag-map.md). Mobile changes how some WCAG Success Criteria apply, with a few being partial or having non-obvious scoping, and the mapping document captures those differences in one place so audits stay consistent.
 
 **Further reading:**
 - [Mobile annotations tutorial](../tutorials/mobile-annotations.md)
@@ -44,6 +46,8 @@ For per-interaction annotation guidance, pair this checklist with the [User Inte
 	- Not every screen needs a title, but if one is needed, only one is used. Titles live in the top app bar (Android) or navigation bar (iOS) and are announced on view transition. Note: in WCAG terms, [SC 2.4.2 Page Titled](https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html) applies to the application as a whole on native, but the per-screen title is still the right pattern for orientation.
 - [ ] **Headings are used sparingly and only when they help structure the screen**
 	- Unlike the web, mobile screens often don't need headings. Use them when content has clear sections that benefit from rotor or TalkBack heading navigation.
+- [ ] **Layouts favor a simple, predictable flow**
+	- On some frameworks like React Native, the operating system determines reading order by scanning the screen roughly top-to-bottom, left-to-right, and there's no API to override it. Designs that follow a clear vertical flow narrate correctly regardless of framework, and they're easier for everyone to scan visually too.
 - [ ] **Reading order matches visual order**
 	- Screen readers narrate in view-tree order. Walk the screen with the VoiceOver rotor (iOS) and TalkBack swipe gestures (Android) to confirm that headings, links, form controls, and landmarks surface in the right order. This is especially important on cards, carousels, and bottom sheets.
 - [ ] **Grouping is annotated**
@@ -62,7 +66,9 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 ## 3. Content (Label, Value, Role, Hint)
 
 - [ ] **Every interactive element has a Label**
-	- Labels are the primary way assistive tech identifies a control. Match the visible text where possible so voice control users can speak what they see (per [SC 2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)). For elements without visible text (icon-only buttons, avatars, etc.), be explicit about which label belongs to which control.
+	- Labels help people understand the purpose of a control. They're useful for everyone and especially important for people with cognitive disabilities.
+	- For Voice Control and Voice Access users, the visible label text must be programmatically associated with the control so users can speak the name they see. Per [SC 2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html).
+	- For elements without visible text (icon-only buttons, avatars, etc.), be explicit in your annotations about which label belongs to which control.
 - [ ] **Stateful controls have a Value**
 	- Toggles, sliders, segmented controls, and inputs need a current value (e.g., "On", "75%", "@octocat").
 - [ ] **Roles and traits are specified per platform**
@@ -70,7 +76,7 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Hints are used only for non-obvious interactions**
 	- Don't put critical info in hints. Users can disable them, and they're announced last.
 - [ ] **Decorative elements are hidden from assistive tech**
-	- Mark with `accessibilityElementsHidden` (iOS) or `importantForAccessibility="no"` (Android).
+	- Mark with `accessibilityElementsHidden` (iOS) or `importantForAccessibility="no"` (Android). If you're not sure whether something is decorative, walk through the [W3C alt-text decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/) — most images aren't truly decorative.
 - [ ] **Language of the app is set, and any sections in a different language are identified**
 	- On native, [SC 3.1.1 Language of Page](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) applies to the application as a whole, not individual screens. For inline text in a different language, identify it programmatically per [SC 3.1.2 Language of Parts](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html).
 
@@ -106,14 +112,14 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Adjacent targets have enough spacing**
 	- Aim for at least 8 pt/dp between tappable elements to prevent mis-taps.
 - [ ] **Buttons and links are used appropriately**
-	- Buttons trigger actions. Links navigate. Don't style one as the other. When annotating, identify every element that performs an action when activated so the right role is applied.
+	- Buttons trigger actions. Links navigate. Don't style one as the other. When annotating, consider the action performed when interacting with each element, and ensure that the right role is applied.
 - [ ] **Each button and link has a unique, descriptive name**
 	- Avoid repeated "More", "Open", or "View" labels in lists. Include context (e.g., "Open pull request 142").
 - [ ] **Disabled buttons are avoided**
 	- Prefer an inactive style with feedback explaining what's missing, or hide the action until it's available.
 
 ### Annotations that can help
-- [Mobile Button Stamp](../tutorials/mobile-annotations.md#mobile-button-stamp)
+[Mobile Button Stamp](../tutorials/mobile-annotations.md#mobile-button-stamp)
 
 ### Resources
 
@@ -159,7 +165,7 @@ Use this section to verify each tier is used appropriately.
 Mobile users rely heavily on system-level settings to make their device usable. The [Device setting annotations](../tutorials/user-interactions.md#device-setting) cover the most common ones. Designs need to respect these settings, not fight them.
 
 - [ ] **Both portrait and landscape orientations are supported**
-	- Per [SC 1.3.4 Orientation](https://www.w3.org/WAI/WCAG22/Understanding/orientation.html), don't lock orientation unless it's essential (e.g., a piano app). Many users mount their device in a fixed orientation for accessibility reasons.
+	- Per [SC 1.3.4 Orientation](https://www.w3.org/WAI/WCAG22/Understanding/orientation.html), don't lock orientation unless it's essential (e.g., a piano app). Many users mount their device in a fixed orientation for accessibility reasons. _All functionality and content must remain available across orientations._
 - [ ] **Layouts adapt to iOS' Dynamic Type and Android's Font Size Scaling**
 	- Test at the largest accessibility text sizes per [SC 1.4.4 Resize Text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html). Content should reflow without truncation or overlap.
 - [ ] **Viewport zoom and viewport resize don't break the layout**
@@ -167,12 +173,12 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 - [ ] **Reduce Motion is honored**
 	- Annotate any motion-heavy transition with the Reduced motion device setting so engineering knows to gate it.
 - [ ] **Voice Control labels match visible text**
-	- Voice Control (iOS) and Voice Access (Android) let users speak the name of a control. If your label and visible text drift apart, voice users can't activate it.
+	- Voice Control on iOS and Voice Access on Android let users speak the name of a control. The visible text and the programmatic accessibility label must match — if they're visually similar but programmatically different (or vice versa), voice users can't activate the control.
 - [ ] **Functionality does not require device motion to operate**
 	- Shake-to-undo, tilt-to-scroll, and similar interactions need a button equivalent and should be possible to disable. Per [SC 2.5.4 Motion Actuation](https://www.w3.org/WAI/WCAG22/Understanding/motion-actuation.html).
 
 ### Annotations that can help
-- [Device setting (User Interactions)](../tutorials/user-interactions.md#device-setting): Reduced motion, Viewport zoom, Voice input, Viewport resize, Orientation, Shake device
+[Device setting (User Interactions)](../tutorials/user-interactions.md#device-setting): Reduced motion, Viewport zoom, Voice input, Viewport resize, Orientation, Shake device
 
 ---
 
@@ -184,13 +190,15 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 	- Email, number, phone, URL keyboards reduce errors and effort.
 - [ ] **Autofill, autocomplete, and content type hints are set**
 	- iOS `textContentType`, Android `autofillHints`. Helps password managers and reduces redundant entry per [SC 3.3.7 Redundant Entry](https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html) and [SC 1.3.5 Identify Input Purpose](https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html).
-- [ ] **Errors are announced and tied to the field**
-	- Per [SC 3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) and [SC 3.3.3 Error Suggestion](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html). Use live regions or accessibility focus to surface errors. Don't rely on color alone.
+- [ ] **Errors are announced, indicated with text, and tied to the field**
+	- Identify what went wrong using text, not just color or an icon.
+	- When the fix is determinable, also suggest how to correct it (e.g., "Email must include @"). Per [SC 3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) and [SC 3.3.3 Error Suggestion](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html).
+	- Use live regions or accessibility focus so screen reader users hear errors when they're announced.
 - [ ] **Legal, financial, or test submissions can be reviewed, corrected, or reversed**
 	- Per [SC 3.3.4 Error Prevention (Legal, Financial, Data)](https://www.w3.org/WAI/WCAG22/Understanding/error-prevention-legal-financial-data.html).
 
 ### Annotations that can help
-- [Form Element](https://gh.io/annotation-tutorial-form-element)
+[Form Element](https://gh.io/annotation-tutorial-form-element)
 
 ---
 
@@ -209,7 +217,7 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 
 ## 10. Touch and keyboard navigation
 
-- [ ] **Every touch interaction is reachable with an external keyboard**
+- [ ] **Every touch interaction is reachable and operable with an external keyboard**
 	- Bluetooth keyboards, iOS Switch Control, and Android Switch Access all rely on a sensible focus order. Per [SC 2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html), the keyboard interface here means any keyboard or keyboard substitute, not just a physical device.
 - [ ] **A visible focus indicator appears when navigating with a keyboard or switch**
 	- Per [SC 2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) and [SC 2.4.11 Focus Not Obscured (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html).
@@ -280,7 +288,7 @@ The [Platform function annotations](../tutorials/user-interactions.md#platform-f
 	- Snackbars, toasts, and OTP inputs need an accessible alternative.
 
 ### Annotations that can help
-- [Mobile Live Region Announcement](../tutorials/mobile-annotations.md#mobile-live-region-announcement)
+[Mobile Live Region Announcement](../tutorials/mobile-annotations.md#mobile-live-region-announcement)
 
 ---
 
