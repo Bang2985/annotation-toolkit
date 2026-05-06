@@ -33,10 +33,10 @@ For audit work, refer to the [Mobile-WCAG Mapping (Internal only)](https://githu
 	- Account for high contrast modes, [Smart Invert (iOS)](https://support.apple.com/guide/iphone/change-display-and-text-size-iph3e2e1fb0/ios), and [color correction (Android)](https://support.google.com/accessibility/android/answer/11183305?hl=en-GB&sjid=1525872318388975084-NC#zippy=%2Cuse-colour-correction:~:text=Colour%20correction%20and%20grayscale%20settings%20help%20your%20device%20compensate%20for%20colour%20blindness.%C2%A0). Don't bake essential information into images that get inverted.
 
 ### Suggested Tools
-
+- [Accessibility Scanner - Google](https://support.google.com/accessibility/android/answer/6376570) — Detects color contrast issues on Android, among other accessibility checks
 - [Check color contrast - Figma Docs](https://help.figma.com/hc/en-us/articles/360041003774-Apply-paints-with-the-color-picker#h_01JQF1T71AC72G6VDXN27B77V0)
 - [Web Color Contrast Checker - WebAIM](https://webaim.org/resources/contrastchecker/)
-- [Colour Contrast Analyzer for Mac and Windows - TPGi](https://www.tpgi.com/color-contrast-checker/)
+- [Colour Contrast Analyzer for Mac and Windows - Vispero](https://vispero.com/lp/color-contrast-checker/)
 
 ---
 
@@ -44,6 +44,8 @@ For audit work, refer to the [Mobile-WCAG Mapping (Internal only)](https://githu
 
 - [ ] **Each screen has at most one Title**
 	- Not every screen needs a title, but if one is needed, only one is used. Titles live in the top app bar (Android) or navigation bar (iOS) and are announced on view transition. Note: in WCAG terms, [SC 2.4.2 Page Titled](https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html) applies to the application as a whole on native, but the per-screen title is still the right pattern for orientation.
+- [ ] **If a screen has no title bar, include a prominent heading near the top of the content**
+	- Screens without a top app bar (Android) or navigation bar (iOS) should still orient users — a clear, prominent heading at or near the top of the visible content gives screen reader users and everyone else a place to land.
 - [ ] **Headings are used sparingly and only when they help structure the screen**
 	- Unlike the web, mobile screens often don't need headings. Use them when content has clear sections that benefit from rotor or [TalkBack](https://support.google.com/accessibility/android/answer/6283677) heading navigation.
 - [ ] **Layouts favor a simple, predictable flow**
@@ -68,6 +70,7 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Every interactive element has a Label**
 	- Labels help people understand the purpose of a control. They're useful for everyone and especially important for people with cognitive disabilities.
 	- For [Voice Control](https://support.apple.com/guide/iphone/use-voice-control-iph2c21a3c88/ios) and [Voice Access](https://support.google.com/accessibility/android/answer/6151848) users, the visible label text must be programmatically associated with the control so users can speak the name they see. Per [SC 2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html).
+		- On iOS, you can also define alternate `.accessibilityInputLabels` so Voice Control users can activate a control with multiple spoken names. For example, a trash icon button labeled "Delete" could also accept "trash" or "garbage". This is especially valuable when a control's primary accessibility label is long or technical.
 	- For elements without visible text (icon-only buttons, avatars, etc.), be explicit in your annotations about which label belongs to which control.
 - [ ] **Stateful controls have a Value**
 	- Toggles, sliders, segmented controls, and inputs need a current value (e.g., "On", "75%", "@octocat").
@@ -76,9 +79,9 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Hints are used only for non-obvious interactions**
 	- Don't put critical info in hints. Users can disable them, and they're announced last.
 - [ ] **Decorative elements are hidden from assistive tech**
-	- Mark with `accessibilityElementsHidden` (iOS) or `importantForAccessibility="no"` (Android). If you're not sure whether something is decorative, walk through the [W3C alt-text decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/) — most images aren't truly decorative.
+	- Mark with `.accessibilityHidden(true)` (iOS) or `importantForAccessibility="no"` (Android). If you're not sure whether something is decorative, walk through the [W3C alt-text decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/) — most images aren't truly decorative.
 - [ ] **Language of the app is set, and any sections in a different language are identified**
-	- On native, [SC 3.1.1 Language of Page](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) applies to the application as a whole, not individual screens. For inline text in a different language, identify it programmatically per [SC 3.1.2 Language of Parts](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html).
+	- On native, [SC 3.1.1 Language of Page](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) applies to the application as a whole, not individual screens. For inline text in a different language, identify it programmatically per [SC 3.1.2 Language of Parts](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html). For implementation details across native frameworks, see [Appt's SC 3.1.2 guidance](https://appt.org/en/guidelines/wcag/success-criterion-3-1-2).
 
 ### Annotations that can help
 - [Mobile Details](../tutorials/mobile-annotations.md#mobile-details)
@@ -112,19 +115,20 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Adjacent targets have enough spacing**
 	- Aim for at least 8 pt/dp between tappable elements to prevent mis-taps.
 - [ ] **Buttons and links are used appropriately**
-	- Buttons trigger actions. Links navigate. Don't style one as the other. When annotating, consider the action performed when interacting with each element, and ensure that the right role is applied.
+	- On mobile, the convention differs from the web. Use **buttons** for anything that navigates within your app or triggers a system function (e.g., initiating a phone call, opening a deep link). Reserve **links** for content that opens in the device browser or a web view. When annotating, consider the action performed when interacting with each element, and ensure that the right role is applied.
 - [ ] **Each button and link has a unique, descriptive name**
 	- Avoid repeated "More", "Open", or "View" labels in lists. Include context (e.g., "Open pull request 142").
 - [ ] **Disabled buttons are avoided**
 	- Prefer an inactive style with feedback explaining what's missing, or hide the action until it's available.
 
 ### Annotations that can help
-[Mobile Button Stamp](../tutorials/mobile-annotations.md#mobile-button-stamp)
+- [Mobile Button Stamp](../tutorials/mobile-annotations.md#mobile-button-stamp)
+- [View Context Web View Stamp](https://github.com/github/annotation-toolkit/blob/main/tutorials/mobile-annotations.md#web-view)
 
 ### Resources
 
 - [Getting To The Bottom Of Minimum WCAG-Conformant Interactive Element Size - Smashing Magazine](https://www.smashingmagazine.com/2024/07/getting-bottom-minimum-wcag-conformant-interactive-element-size/)
-- [Apple HIG: Buttons](https://developer.apple.com/design/human-interface-guidelines/buttons)
+- [Apple HIG: Accessibility (Mobility)](https://developer.apple.com/design/human-interface-guidelines/accessibility#Mobility)
 - [Material Design: Touch targets](https://m3.material.io/foundations/designing/structure#1da3138c-2b54-4f5b-9c88-dbf6e6b9c12a)
 
 ---
@@ -140,13 +144,15 @@ The [User Interactions tutorial](../tutorials/user-interactions.md#touch-gesture
 Use this section to verify each tier is used appropriately.
 
 - [ ] **Primary actions use Basic gestures**
-	- Single tap is the most accessible. Reserve it for the most important interactions on a screen.
-- [ ] **Specialized gestures are used sparingly and have a single-point alternative**
+	- Single tap is the foundational, most accessible touch gesture. Interactive elements assume single tap unless otherwise specified — reach for Specialized or Advanced gestures only when there's a strong reason and an alternative path exists.
+- [ ] **Specialized gestures are used sparingly and have a single-tap alternative**
 	- Pinch-to-zoom, swipe-to-delete, swipe-to-reveal-actions, and tap-and-hold all need a button or menu equivalent. Required by [SC 2.5.1 Pointer Gestures](https://www.w3.org/WAI/WCAG22/Understanding/pointer-gestures.html).
 - [ ] **Advanced gestures are avoided unless essential**
 	- Multi-finger taps, two-finger rotation, and path-based gestures should not be the only way to do something. If they are essential, document the [accessible alternatives](https://tetralogical.com/blog/2023/03/17/foundations-pointer-gestures/#examples-of-accessible-alternatives).
 - [ ] **Drag-and-drop has a non-dragging alternative**
 	- Per [SC 2.5.7 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html). Reorder lists with up/down buttons, move items with a menu, etc.
+- [ ] **Custom components support the VoiceOver scrub gesture (iOS)**
+	- On iOS, the two-finger scrub gesture (sometimes called the Z-shape gesture) acts as a back/dismiss for VoiceOver users — it can navigate backward, dismiss modals, and collapse custom components. Stock components handle this automatically. If you're building custom components that should be dismissable or collapsible, wire up scrub support manually.
 - [ ] **Custom gestures are exposed as VoiceOver and TalkBack Custom Actions**
 	- So screen reader users can discover and trigger them without performing the gesture.
 - [ ] **Animations and transitions respect [Reduce Motion](https://support.apple.com/guide/iphone/customize-onscreen-motion-iph0b691d3ed/ios)**
@@ -193,7 +199,7 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 - [ ] **Errors are announced, indicated with text, and tied to the field**
 	- Identify what went wrong using text, not just color or an icon.
 	- When the fix is determinable, also suggest how to correct it (e.g., "Email must include @"). Per [SC 3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) and [SC 3.3.3 Error Suggestion](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html).
-	- Use live regions or accessibility focus so screen reader users hear errors when they're announced.
+	- Use live accessibility announcements or accessibility focus so screen reader users hear errors when they're announced.
 - [ ] **Legal, financial, or test submissions can be reviewed, corrected, or reversed**
 	- Per [SC 3.3.4 Error Prevention (Legal, Financial, Data)](https://www.w3.org/WAI/WCAG22/Understanding/error-prevention-legal-financial-data.html).
 
@@ -221,12 +227,12 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 	- Bluetooth keyboards, [iOS Switch Control](https://support.apple.com/en-us/119835), and [Android Switch Access](https://support.google.com/accessibility/android/answer/6122836) all rely on a sensible focus order. Per [SC 2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html), the keyboard interface here means any keyboard or keyboard substitute, not just a physical device.
 - [ ] **A visible focus indicator appears when navigating with a keyboard or switch**
 	- Per [SC 2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) and [SC 2.4.11 Focus Not Obscured (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html).
-- [ ] **Focus order is annotated and matches the visual flow**
-	- Avoid focus that jumps back and forth across the screen.
+- [ ] **Focus order is annotated for complex layouts when needed**
+	- For most simple, top-to-bottom screens, the default focus order works fine and shouldn't be overridden. When a layout is complex (cards with multiple actions, side-by-side groups, custom controls), annotate the intended focus order so engineering knows where overrides are needed. Avoid prescribing focus order on screens where it isn't necessary.
 - [ ] **There are no focus traps**
 	- Modals, sheets, and overlays must let users dismiss and return focus to a logical place. Per [SC 2.1.2 No Keyboard Trap](https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html).
 - [ ] **Custom controls expose proper accessibility actions**
-	- A custom slider should respond to increment/decrement actions, not just drag.
+	- For example, a custom slider should respond to increment/decrement actions, not just drag.
 - [ ] **Keyboard shortcuts don't override platform or assistive tech shortcuts**
 	- Check against VoiceOver, TalkBack, Switch Control, and Voice Control shortcut tables before claiming a key combo. See the [Keyboard shortcut annotation guidance](../tutorials/user-interactions.md#keyboard-shortcut).
 - [ ] **No single-character shortcuts are introduced for new features**
@@ -260,11 +266,11 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 The [Platform function annotations](../tutorials/user-interactions.md#platform-function) flag built-in behaviors that can disorient users if they're not designed carefully.
 
 - [ ] **Loading states have clear visual and programmatic feedback**
-	- Use a live region announcement, not just a spinner. See [Mobile Live Region Announcement](../tutorials/mobile-annotations.md#mobile-live-region-announcement). Per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+	- Use live accessibility announcements, not just a spinner. Per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
 - [ ] **Automatic transitions are avoided or controllable**
 	- System-initiated screen, state, or content changes should be paused, slowed, or dismissible. Common offenders: onboarding carousels, auto-advancing tutorials. Per [SC 3.2.1 On Focus](https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html) and [SC 3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input.html).
 - [ ] **Opening external content is announced**
-	- "Opens in Safari", "Opens in browser", or "Opens in a new window" warnings prevent disorientation, especially when leaving an app for a web view.
+	- "Opens in browser" or "Opens in a new window" warnings prevent disorientation, especially when leaving an app for a web view.
 - [ ] **Time limits can be turned off, adjusted, or extended**
 	- Exceptions: real-time events (auctions, live games) or time limits beyond 20 hours. Per [SC 2.2.1 Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html).
 - [ ] **Cognitive function tests have an accessible alternative**
@@ -272,13 +278,13 @@ The [Platform function annotations](../tutorials/user-interactions.md#platform-f
 
 ### Annotations that can help
 - [Platform function (User Interactions)](../tutorials/user-interactions.md#platform-function): Loading, Automatic transition, Open in new tab, Time limit, Cognitive puzzle
-- [Mobile Live Region Announcement](../tutorials/mobile-annotations.md#mobile-live-region-announcement)
+- [Mobile Live Region Announcement](../tutorials/mobile-annotations.md#mobile-live-region-announcement): The Figma component helps annotate live accessibility announcements and is named 'Mobile Live Region Announcement' for cross-platform familiarity.
 
 ---
 
 ## 13. Notifications and live updates
 
-- [ ] **Status changes are announced via Live Regions**
+- [ ] **Status changes are announced via live accessibility announcements**
 	- Search results, form validation, toast notifications, and async updates need an accessibility announcement so screen reader users don't miss them. Per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
 - [ ] **`polite` vs `assertive` is chosen intentionally**
 	- Use `assertive` only for critical info (errors, blocking states). Default to `polite`.
