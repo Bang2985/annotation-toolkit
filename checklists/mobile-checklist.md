@@ -2,7 +2,9 @@
 
 This checklist summarizes accessibility considerations specific to iOS and Android, drawing from [Web Content Accessibility Guidelines (WCAG) 2.2](https://www.w3.org/TR/WCAG22/), the [W3C Guidance on Applying WCAG 2.2 to Mobile Applications](https://www.w3.org/TR/wcag2mobile-22/), and best practices identified by GitHub.
 
-Native mobile has its own set of accessibility patterns, APIs, and user expectations that don't map cleanly to the web. Use this checklist when designing or building **native mobile experiences** on iOS and Android. You don't need to also run through the [Designer Checklist](./designer-checklist.md) or [Engineering Checklist](./engineering-checklist.md) for a native app.
+Native mobile has its own set of accessibility patterns, APIs, and user expectations that don't map cleanly to the web. Use this checklist when designing or building **native mobile experiences** on iOS and Android. You don't need to also run through the [Designer Checklist](./designer-checklist.md) or [Engineering Checklist](./engineering-checklist.md) for a native app. 
+
+Across both platforms, the underlying user needs are the same: people must be able to perceive, operate, and understand the experience equivalently, even when the patterns and conventions differ. Differences in *how* something is implemented across iOS and Android are expected and fine. Differences in *whether* a user can access information, complete a task, or form an understanding are not.
 
 The one exception: if part of your app uses a **web view**, apply the web checklists to that content. Flag those areas with a [View Context Stamp](../tutorials/mobile-annotations.md#view-context-stamps-and-details) so the handoff is explicit. Examples of web view content are an in-app browser, an OAuth flow, embedded docs, or any HTML-rendered content.
 
@@ -54,7 +56,7 @@ Remove the element in question from the design. If the rest still makes sense an
 - [ ] **Layouts favor a simple, predictable flow**
 	- On some frameworks like React Native, the operating system determines reading order by scanning the screen roughly top-to-bottom, left-to-right, and there's no API to override it. Designs that follow a clear vertical flow narrate correctly regardless of framework, and they're easier for everyone to scan visually too.
 - [ ] **Reading order matches visual order**
-	- Screen readers narrate in view-tree order. Walk the screen with the [VoiceOver](https://support.apple.com/guide/iphone/turn-on-and-practice-voiceover-iph3e2e415f/ios) rotor (iOS) and TalkBack swipe gestures (Android) to confirm that headings, links, form controls, and landmarks surface in the right order. This is especially important on cards, carousels, and bottom sheets.
+	- Screen readers narrate in view-tree order. Walk the screen with the [VoiceOver](https://support.apple.com/guide/iphone/turn-on-and-practice-voiceover-iph3e2e415f/ios) rotor (iOS) and TalkBack swipe gestures (Android) to confirm that headings, links, and form controls surface in the right order. This is especially important on cards, carousels, and bottom sheets.
 - [ ] **Grouping is annotated**
 	- Use a Mobile Grouping Stamp to mark elements that should be announced as one unit (avatar + name + timestamp on a comment, for example). This includes any content block that should read as a single unit rather than several separate stops.
 
@@ -73,7 +75,7 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Every interactive element has a Label**
 	- Labels help people understand the purpose of a control. They're useful for everyone and especially important for people with cognitive disabilities.
 	- For [Voice Control](https://support.apple.com/guide/iphone/use-voice-control-iph2c21a3c88/ios) and [Voice Access](https://support.google.com/accessibility/android/answer/6151848) users, the visible label text must be programmatically associated with the control so users can speak the name they see. Per [SC 2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html).
-		- On iOS, you can also define alternate `.accessibilityInputLabels` so Voice Control users can activate a control with multiple spoken names. For example, a trash icon button labeled "Delete" could also accept "trash" or "garbage". This is especially valuable when a control's primary accessibility label is long or technical.
+		- On iOS, alternate .accessibilityInputLabels let Voice Control users activate a control with multiple spoken names. For example, a trash icon labeled "Delete" could also accept "trash" or "garbage" — useful when the primary label is long or technical.
 	- For elements without visible text (icon-only buttons, avatars, etc.), be explicit in your annotations about which label belongs to which control.
 - [ ] **Stateful controls have a Value**
 	- Toggles, sliders, segmented controls, and inputs need a current value (e.g., "On", "75%", "@octocat").
@@ -84,7 +86,7 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Directionality is not used in content**
 	- Avoid wording like "see below" or "to the left/right" — content positions shift across orientations, screen sizes, and reading order. Use "first/last" or "previous/next" instead.
 - [ ] **Truncation is only used when unavoidable**
-	- Truncated text hides information and can break for users at larger Dynamic Type sizes. Prefer reflowing, wrapping, or progressive disclosure (expand/collapse) over truncation. When truncation is unavoidable, ensure the full content is reachable some other way.
+	- Truncated text hides information and can break when text is scaled up. Prefer reflowing, wrapping, or progressive disclosure (expand/collapse) over truncation. When truncation is unavoidable, ensure the full content is reachable some other way.
 - [ ] **Content is written in plain language**
 	- Aim for an 8th-grade reading level. Explain abbreviations on first use. Avoid complex metaphors, regional phrases, idioms, and jargon. This helps people with cognitive disabilities, non-native speakers, and anyone reading on a small screen in a distracted context.
 - [ ] **Decorative elements are hidden from assistive tech**
@@ -161,9 +163,9 @@ Use this section to verify each tier is used appropriately.
 - [ ] **Drag-and-drop has a non-dragging alternative**
 	- Per [SC 2.5.7 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html). Reorder lists with up/down buttons, move items with a menu, etc.
 - [ ] **Custom components support the VoiceOver scrub gesture (iOS)**
-	- On iOS, the two-finger scrub gesture (sometimes called the Z-shape gesture) acts as a back/dismiss for VoiceOver users — it can navigate backward, dismiss modals, and collapse custom components. Stock components handle this automatically. If you're building custom components that should be dismissable or collapsible, wire up scrub support manually.
-- [ ] **Custom gestures are exposed as VoiceOver and TalkBack Custom Actions**
-	- So screen reader users can discover and trigger them without performing the gesture.
+	- On iOS, the two-finger scrub (Z-shape) gesture acts as a back/dismiss for VoiceOver users — it can navigate backward, dismiss modals, and collapse components. Stock components handle this automatically. Custom components that should be dismissible or collapsible need scrub support wired up manually.
+- [ ] **Custom Actions are also exposed to other accessibility services**
+	- Alternatives to gestures are needed by users of speech recognition (Voice Control / Voice Access), Switch Control / Switch Access, and external keyboard navigation, not just screen reader users.
 - [ ] **Animations and transitions respect [Reduce Motion](https://support.apple.com/guide/iphone/customize-onscreen-motion-iph0b691d3ed/ios)**
 	- Honor `UIAccessibility.isReduceMotionEnabled` (iOS) and `Settings.Global.TRANSITION_ANIMATION_SCALE` (Android). Replace large motion with cross-fades or instant transitions.
 - [ ] **Pointer cancellation is supported**
@@ -188,7 +190,7 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 - [ ] **Reduce Motion is honored**
 	- Annotate any motion-heavy transition with the Reduced motion device setting so engineering knows to gate it.
 - [ ] **Voice Control labels match visible text**
-	- Voice Control on iOS and Voice Access on Android let users speak the name of a control. The visible text and the programmatic accessibility label must match — if they're visually similar but programmatically different (or vice versa), voice users can't activate the control.
+	- Voice Control (iOS) and Voice Access (Android) let users speak the name of a control. The visible text and programmatic label must match — if they don't, voice users have to fall back on workarounds. On iOS, alternate .accessibilityInputLabels can serve voice control users when a single label can't do both jobs.
 - [ ] **Functionality does not require device motion to operate**
 	- Shake-to-undo, tilt-to-scroll, and similar interactions need a button equivalent and should be possible to disable. Per [SC 2.5.4 Motion Actuation](https://www.w3.org/WAI/WCAG22/Understanding/motion-actuation.html).
 
@@ -207,7 +209,7 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 	- iOS `textContentType`, Android `autofillHints`. Helps password managers and reduces redundant entry per [SC 3.3.7 Redundant Entry](https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html) and [SC 1.3.5 Identify Input Purpose](https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html).
 - [ ] **Errors are announced, indicated with text, and tied to the field**
 	- Identify what went wrong using text, not just color or an icon.
-	- Place inline errors next to or below the field with the error. For form-level errors (e.g., a submission summary), surface them at the top or bottom of the form with line items linking to each affected field.
+	- Place inline errors next to or below the field with the error. For form-level errors (e.g., a submission summary), surface them at the top or bottom of the form.
 	- When the fix is determinable, also suggest how to correct it (e.g., "Email must include @"). Per [SC 3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) and [SC 3.3.3 Error Suggestion](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html).
 	- Use live accessibility announcements or accessibility focus so screen reader users hear errors when they're announced.
 - [ ] **Legal, financial, or test submissions can be reviewed, corrected, or reversed**
@@ -238,7 +240,8 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 - [ ] **A visible focus indicator appears when navigating with a keyboard or switch**
 	- Per [SC 2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) and [SC 2.4.11 Focus Not Obscured (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html).
 - [ ] **Focus order is annotated for complex layouts when needed**
-	- For most simple, top-to-bottom screens, the default focus order works fine and shouldn't be overridden. When a layout is complex (cards with multiple actions, side-by-side groups, custom controls), annotate the intended focus order so engineering knows where overrides are needed. Avoid prescribing focus order on screens where it isn't necessary.
+	- Default focus order works fine for simple, top-to-bottom screens — don't override it. Avoid prescribing focus order on screens where it isn't necessary.
+    - For complex layouts (cards with multiple actions, side-by-side groups, custom controls), annotate the intended focus order so engineering knows where overrides are needed. 
 - [ ] **There are no focus traps**
 	- Modals, sheets, and overlays must let users dismiss and return focus to a logical place. Per [SC 2.1.2 No Keyboard Trap](https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html).
 - [ ] **Custom controls expose proper accessibility actions**
@@ -251,6 +254,9 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 ### Annotations that can help
 - [Ordering](https://gh.io/annotation-tutorial-ordering) (Focus Order, Arrow Stop)
 - [Keyboard shortcut (User Interactions)](../tutorials/user-interactions.md#keyboard-shortcut)
+
+### Resources
+[Mobile keyboard navigation and testing - Workday Accessibility](https://github.com/workday-accessibility/accessibility-eval/blob/main/keyboard.md)
 
 ---
 
@@ -280,11 +286,11 @@ The [Platform function annotations](../tutorials/user-interactions.md#platform-f
 - [ ] **Automatic transitions are avoided or controllable**
 	- System-initiated screen, state, or content changes should be paused, slowed, or dismissible. Common offenders: onboarding carousels, auto-advancing tutorials. Per [SC 3.2.1 On Focus](https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html) and [SC 3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input.html).
 - [ ] **Opening external content is announced**
-	- "Opens in browser" or "Opens in a new window" warnings prevent disorientation, especially when leaving an app for a web view.
+	- "Opens in browser" or "Opens in a new window" warnings prevent disorientation, especially when leaving the app for the device browser.
 - [ ] **Time limits can be turned off, adjusted, or extended**
 	- Exceptions: real-time events (auctions, live games) or time limits beyond 20 hours. Per [SC 2.2.1 Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html).
 - [ ] **Cognitive function tests have an accessible alternative**
-	- CAPTCHA puzzles, math challenges, and memory checks need an alternate path. Per [SC 3.3.8 Accessible Authentication (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html). Note: passwords used to unlock the underlying platform (device passcode, biometric unlock) are out of scope for this requirement at the app level.
+	- CAPTCHA puzzles, math challenges, and memory checks need an alternate path. Per [SC 3.3.8 Accessible Authentication (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html). Device-level passcodes and biometric unlocks are out of scope for this requirement.
 
 ### Annotations that can help
 - [Platform function (User Interactions)](../tutorials/user-interactions.md#platform-function): Loading, Automatic transition, Open in new tab, Time limit, Cognitive puzzle
