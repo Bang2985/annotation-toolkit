@@ -38,6 +38,9 @@ For audit work, refer to the [Mobile-WCAG Mapping (Internal only)](https://githu
 - [Web Color Contrast Checker - WebAIM](https://webaim.org/resources/contrastchecker/)
 - [Colour Contrast Analyzer for Mac and Windows - Vispero](https://vispero.com/lp/color-contrast-checker/)
 
+### Exercises
+Quick gut-check: remove the element in question from the design. If the rest still makes sense and is usable without it, the element may not need to meet contrast requirements.
+
 ---
 
 ## 2. Hierarchy
@@ -78,6 +81,12 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 	- iOS uses traits (button, header, adjustable, selected). Android uses roles and state descriptions. Annotate both if you ship to both.
 - [ ] **Hints are used only for non-obvious interactions**
 	- Don't put critical info in hints. Users can disable them, and they're announced last.
+- [ ] **Directionality is not used in content**
+	- Avoid wording like "see below" or "to the left/right" — content positions shift across orientations, screen sizes, and reading order. Use "first/last" or "previous/next" instead.
+- [ ] **Truncation is only used when unavoidable**
+	- Truncated text hides information and can break for users at larger Dynamic Type sizes. Prefer reflowing, wrapping, or progressive disclosure (expand/collapse) over truncation. When truncation is unavoidable, ensure the full content is reachable some other way.
+- [ ] **Content is written in plain language**
+	- Aim for an 8th-grade reading level. Explain abbreviations on first use. Avoid complex metaphors, regional phrases, idioms, and jargon. This helps people with cognitive disabilities, non-native speakers, and anyone reading on a small screen in a distracted context.
 - [ ] **Decorative elements are hidden from assistive tech**
 	- Mark with `.accessibilityHidden(true)` (iOS) or `importantForAccessibility="no"` (Android). If you're not sure whether something is decorative, walk through the [W3C alt-text decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/) — most images aren't truly decorative.
 - [ ] **Language of the app is set, and any sections in a different language are identified**
@@ -198,6 +207,7 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 	- iOS `textContentType`, Android `autofillHints`. Helps password managers and reduces redundant entry per [SC 3.3.7 Redundant Entry](https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html) and [SC 1.3.5 Identify Input Purpose](https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html).
 - [ ] **Errors are announced, indicated with text, and tied to the field**
 	- Identify what went wrong using text, not just color or an icon.
+	- Place inline errors next to or below the field with the error. For form-level errors (e.g., a submission summary), surface them at the top or bottom of the form with line items linking to each affected field.
 	- When the fix is determinable, also suggest how to correct it (e.g., "Email must include @"). Per [SC 3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) and [SC 3.3.3 Error Suggestion](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html).
 	- Use live accessibility announcements or accessibility focus so screen reader users hear errors when they're announced.
 - [ ] **Legal, financial, or test submissions can be reviewed, corrected, or reversed**
