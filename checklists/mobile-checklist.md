@@ -4,7 +4,7 @@ This checklist summarizes accessibility considerations specific to iOS and Andro
 
 Native mobile has its own set of accessibility patterns, APIs, and user expectations that don't map cleanly to the web. Use this checklist when designing or building **native mobile experiences** on iOS and Android. You don't need to also run through the [Designer Checklist](./designer-checklist.md) or [Engineering Checklist](./engineering-checklist.md) for a native app. 
 
-Across both platforms, the underlying user needs are the same: people must be able to perceive, operate, and understand the experience equivalently, even when the patterns and conventions differ. Differences in *how* something is implemented across iOS and Android are expected and fine. Differences in *whether* a user can access information, complete a task, or form an understanding are not.
+Across both platforms, the underlying fuser needs are the same: people must be able to perceive, operate, and understand the experience equivalently, even when the patterns and conventions differ. Differences in *how* something is implemented across iOS and Android are expected and fine. Differences in *whether* a user can access information, complete a task, or form an understanding are not.
 
 The one exception: if part of your app uses a **web view**, apply the web checklists to that content. Flag those areas with a [View Context Stamp](../tutorials/mobile-annotations.md#view-context-stamps-and-details) so the handoff is explicit. Examples of web view content are an in-app browser, an OAuth flow, embedded docs, or any HTML-rendered content.
 
@@ -105,7 +105,7 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 - [ ] **Functional images and icon-only buttons have an accessible label**
 	- Decorative images should be hidden from screen readers, not given empty labels that still get focused.
 - [ ] **Important text is not baked into images**
-	- It can't be translated, scaled with Dynamic Type, or copied.
+	- It can't be translated, scaled up, or copied.
 - [ ] **Video and audio include captions, transcripts, or audio descriptions where applicable**
 - [ ] **Auto-playing or scrolling content can be paused, stopped, or hidden**
 	- Includes auto-advancing carousels, looping animations, and live previews.
