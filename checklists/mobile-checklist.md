@@ -4,7 +4,7 @@ This checklist summarizes accessibility considerations specific to iOS and Andro
 
 Native mobile has its own set of accessibility patterns, APIs, and user expectations that don't map cleanly to the web. Use this checklist when designing or building **native mobile experiences** on iOS and Android. You don't need to also run through the [Designer Checklist](./designer-checklist.md) or [Engineering Checklist](./engineering-checklist.md) for a native app. 
 
-Across both platforms, the underlying fuser needs are the same: people must be able to perceive, operate, and understand the experience equivalently, even when the patterns and conventions differ. Differences in *how* something is implemented across iOS and Android are expected and fine. Differences in *whether* a user can access information, complete a task, or form an understanding are not.
+Web and native mobile look different, but they're chasing the same goal: people must be able to perceive, operate, and understand the experience regardless of platform. The patterns, APIs, and conventions diverge, but the underlying user needs don't. This checklist focuses on how that goal gets met on native — where stock controls, system settings, and gesture conventions do a lot of the work that markup and ARIA do on the web.
 
 The one exception: if part of your app uses a **web view**, apply the web checklists to that content. Flag those areas with a [View Context Stamp](../tutorials/mobile-annotations.md#view-context-stamps-and-details) so the handoff is explicit. Examples of web view content are an in-app browser, an OAuth flow, embedded docs, or any HTML-rendered content.
 
