@@ -97,7 +97,7 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 ### Annotations that can help
 - [Mobile Details](../tutorials/mobile-annotations.md#mobile-details)
 - [View Context Stamps and Details](../tutorials/mobile-annotations.md#view-context-stamps-and-details) for web views, user-generated content, and non-native content
-- [Language]()
+- [Metadata (Language)](../tutorials/metadata.md#language)
 
 ---
 
