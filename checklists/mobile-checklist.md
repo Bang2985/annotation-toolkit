@@ -48,7 +48,7 @@ Remove the element in question from the design. If the rest still makes sense an
 ## 2. Hierarchy
 
 - [ ] **Each screen has at most one Title**
-	- Not every screen needs a title, but if one is needed, only one is used. Titles live in the top app bar (Android) or navigation bar (iOS) and are announced on view transition. Note: in WCAG terms, [SC 2.4.2 Page Titled](https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html) applies to the application as a whole on native, but the per-screen title is still the right pattern for orientation.
+	- Not every screen needs a title, but if one is needed, only one is used. Titles live in the top app bar (Android) or navigation bar (iOS) and are announced on view transition. [SC 2.4.2 Page Titled](https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html) technically applies to the whole app, but per-screen titles are still the right pattern for orientation.
 - [ ] **If a screen has no title bar, include a prominent heading near the top of the content**
 	- Screens without a top app bar (Android) or navigation bar (iOS) should still orient users — a clear, prominent heading at or near the top of the visible content gives screen reader users and everyone else a place to land.
 - [ ] **Headings are used sparingly and only when they help structure the screen**
