@@ -1,6 +1,6 @@
 # Mobile Checklist
 
-This checklist summarizes accessibility considerations specific to iOS and Android, drawing from [Web Content Accessibility Guidelines (WCAG) 2.2](https://www.w3.org/TR/WCAG22/), the [W3C Guidance on Applying WCAG 2.2 to Mobile Applications](https://www.w3.org/TR/wcag2mobile-22/), and best practices identified by GitHub.
+This checklist summarizes accessibility considerations specific to iOS and Android, drawing from [Web Content Accessibility Guidelines (WCAG) 2.2](https://www.w3.org/TR/WCAG22/), the W3C's guidance on [Applying WCAG 2.2 to Mobile Applications](https://www.w3.org/TR/wcag2mobile-22/), and best practices identified by GitHub.
 
 Native mobile has its own set of accessibility patterns, APIs, and user expectations that don't map cleanly to the web. Use this checklist when designing or building **native mobile experiences** on iOS and Android. You don't need to also run through the [Designer Checklist](./designer-checklist.md) or [Engineering Checklist](./engineering-checklist.md) for a native app. 
 
@@ -91,12 +91,13 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 	- Aim for an 8th-grade reading level. Explain abbreviations on first use. Avoid complex metaphors, regional phrases, idioms, and jargon. This helps people with cognitive disabilities, non-native speakers, and anyone reading on a small screen in a distracted context.
 - [ ] **Decorative elements are hidden from assistive tech**
 	- Mark with `.accessibilityHidden(true)` (iOS) or `importantForAccessibility="no"` (Android). If you're not sure whether something is decorative, walk through the [W3C alt-text decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/). Most images aren't truly decorative.
-- [ ] **Language of the app is set, and any sections in a different language are identified**
+- [ ] **App language is set and any sections in a different language are identified**
 	- In native apps, [SC 3.1.1 Language of Page](https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html) applies to the application as a whole, not individual screens. For inline text in a different language, identify it programmatically per [SC 3.1.2 Language of Parts](https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html). For implementation details across native frameworks, see [Appt's SC 3.1.2 guidance](https://appt.org/en/guidelines/wcag/success-criterion-3-1-2).
 
 ### Annotations that can help
 - [Mobile Details](../tutorials/mobile-annotations.md#mobile-details)
 - [View Context Stamps and Details](../tutorials/mobile-annotations.md#view-context-stamps-and-details) for web views, user-generated content, and non-native content
+- [Language]()
 
 ---
 
@@ -104,16 +105,17 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 
 - [ ] **Functional images and icon-only buttons have an accessible label**
 	- Decorative images should be hidden from screen readers, not given empty labels that still get focused.
-- [ ] **Important text is not baked into images**
+- [ ] **Important text is not located inside an image**
 	- It can't be translated, scaled up, or copied.
-- [ ] **Video and audio include captions, transcripts, or audio descriptions where applicable**
+- [ ] **Alternative media is included**
+	- Video and audio include captions, transcripts, or audio descriptions where applicable.
 - [ ] **Auto-playing or scrolling content can be paused, stopped, or hidden**
 	- Includes auto-advancing carousels, looping animations, and live previews.
 - [ ] **Nothing flashes more than 3 times per second**
 
 ### Resources
 
-- [Alt Text Guide - GitHub Workplace Accessibility](https://github.com/github/workplace-accessibility/blob/main/resources/content-accessibility/alt-text-guide.md)
+- [Alt Text Guide - GitHub Workplace Accessibility (Internal only)](https://github.com/github/workplace-accessibility/blob/main/resources/content-accessibility/alt-text-guide.md)
 - [W3C alt-text decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/)
 
 ---
@@ -121,7 +123,7 @@ Sketch out the focus order with arrows before annotating. If the line zig-zags, 
 ## 5. Interactivity and touch targets
 
 - [ ] **Touch targets are at least 44x44 pt (iOS) / 48x48 dp (Android)**
-	- This meets [WCAG 2.2 SC 2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) of 24x24 CSS pixels with healthy margin, and aligns with both platforms' HIG guidance.
+	- This meets [SC 2.5.8 Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) of 24x24 CSS pixels with healthy margin, and aligns with both platforms' HIG guidance.
 	- Targets that let users select a value spatially based on position within the target (sliders, color pickers, map pins inside a draggable region) are considered a single target for this SC.
 - [ ] **Adjacent targets have enough spacing**
 	- Aim for at least 8 pt/dp between tappable elements to prevent mis-taps.
@@ -161,7 +163,7 @@ Use this section to verify each tier is used appropriately.
 - [ ] **Advanced gestures are avoided unless essential**
 	- Multi-finger taps, two-finger rotation, and path-based gestures should not be the only way to do something. If they are essential, document the [accessible alternatives](https://tetralogical.com/blog/2023/03/17/foundations-pointer-gestures/#examples-of-accessible-alternatives).
 - [ ] **Drag-and-drop has a non-dragging alternative**
-	- Per [SC 2.5.7 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html). Reorder lists with up/down buttons, move items with a menu, etc.
+	- Per [SC 2.5.7 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html), reorder lists with up/down buttons, move items with a menu, etc.
 - [ ] **Custom components support the VoiceOver scrub gesture (iOS)**
 	- On iOS, the two-finger scrub (Z-shape) gesture acts as a back/dismiss for VoiceOver users. It can navigate backward, dismiss modals, and collapse components. Stock components handle this automatically. Custom components that should be dismissible or collapsible need scrub support wired up manually.
 - [ ] **Custom Actions are also exposed to other accessibility services**
@@ -172,8 +174,10 @@ Use this section to verify each tier is used appropriately.
 	- Per [SC 2.5.2 Pointer Cancellation](https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation.html), trigger actions on the up-event so users can drag off a control to cancel.
 
 ### Annotations that can help
-- [Touch gesture (User Interactions)](../tutorials/user-interactions.md#touch-gesture)
-- [User Interactions tutorial](https://gh.io/annotation-tutorial-user-interactions)
+[User Interactions (Touch gesture)](../tutorials/user-interactions.md#touch-gesture)
+
+### Resources
+[User Interactions tutorial](https://gh.io/annotation-tutorial-user-interactions)
 
 ---
 
@@ -182,7 +186,7 @@ Use this section to verify each tier is used appropriately.
 Mobile users rely heavily on system-level settings to make their device usable. The [Device setting annotations](../tutorials/user-interactions.md#device-setting) cover the most common ones. Designs need to respect these settings, not fight them.
 
 - [ ] **Both portrait and landscape orientations are supported**
-	- Per [SC 1.3.4 Orientation](https://www.w3.org/WAI/WCAG22/Understanding/orientation.html), don't lock orientation unless it's essential (e.g., a piano app). Many users mount their device in a fixed orientation for accessibility reasons. _All functionality and content must remain available across orientations._
+	- Per [SC 1.3.4 Orientation](https://www.w3.org/WAI/WCAG22/Understanding/orientation.html), don't lock orientation unless it's _essential_. Many users mount their device in a fixed orientation for accessibility reasons. _All functionality and content must remain available across orientations._
 - [ ] **Layouts adapt to [iOS' Dynamic Type](https://developer.apple.com/documentation/uikit/scaling-fonts-automatically) and [Android's Font Size Scaling](https://support.google.com/accessibility/android/answer/11183305)**
 	- Test at the largest accessibility text sizes per [SC 1.4.4 Resize Text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html). Content should reflow without truncation or overlap.
 - [ ] **Viewport zoom and viewport resize don't break the layout**
@@ -192,10 +196,10 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 - [ ] **Voice Control labels match visible text**
 	- Voice Control (iOS) and Voice Access (Android) let users speak the name of a control. The visible text and programmatic label must match. If they don't, voice users have to fall back on workarounds. On iOS, alternate .accessibilityInputLabels can serve voice control users when a single label can't do both jobs.
 - [ ] **Functionality does not require device motion to operate**
-	- Shake-to-undo, tilt-to-scroll, and similar interactions need a button equivalent and should be possible to disable. Per [SC 2.5.4 Motion Actuation](https://www.w3.org/WAI/WCAG22/Understanding/motion-actuation.html).
+	- Shake-to-undo, tilt-to-scroll, and similar interactions need a button equivalent and should be possible to disable per [SC 2.5.4 Motion Actuation](https://www.w3.org/WAI/WCAG22/Understanding/motion-actuation.html).
 
 ### Annotations that can help
-[Device setting (User Interactions)](../tutorials/user-interactions.md#device-setting): Reduced motion, Viewport zoom, Voice input, Viewport resize, Orientation, Shake device
+[User Interactions (Device setting)](../tutorials/user-interactions.md#device-setting)
 
 ---
 
@@ -210,7 +214,7 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 - [ ] **Errors are announced, indicated with text, and tied to the field**
 	- Identify what went wrong using text, not just color or an icon.
 	- Place inline errors next to or below the field with the error. For form-level errors (e.g., a submission summary), surface them at the top or bottom of the form.
-	- When the fix is determinable, also suggest how to correct it (e.g., "Email must include @"). Per [SC 3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) and [SC 3.3.3 Error Suggestion](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html).
+	- When the fix is determinable, also suggest how to correct it (e.g., "Email must include @"), per [SC 3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) and [SC 3.3.3 Error Suggestion](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html).
 	- Use live accessibility announcements or accessibility focus so screen reader users hear errors when they're announced.
 - [ ] **Legal, financial, or test submissions can be reviewed, corrected, or reversed**
 	- Per [SC 3.3.4 Error Prevention (Legal, Financial, Data)](https://www.w3.org/WAI/WCAG22/Understanding/error-prevention-legal-financial-data.html).
@@ -226,10 +230,10 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 	- Cover small phones, large phones, foldables, and tablets. Verify safe areas, notches, and home indicators don't obscure content.
 - [ ] **Content reflows without loss of information or functionality**
 	- In native apps, [SC 1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) applies through WCAG2ICT guidance: when users resize text via Dynamic Type or font scaling, content should reflow without requiring scrolling in two dimensions for primary content.
-- [ ] **Persistent UI (nav, help, status) appears in consistent locations across screens**
-	- Per [SC 3.2.3 Consistent Navigation](https://www.w3.org/WAI/WCAG22/Understanding/consistent-navigation.html) and [SC 3.2.6 Consistent Help](https://www.w3.org/WAI/WCAG22/Understanding/consistent-help.html).
+- [ ] **Persistent UI appears in consistent locations across screens**
+	- Applies to things like navigation, help, status, etc. Per [SC 3.2.3 Consistent Navigation](https://www.w3.org/WAI/WCAG22/Understanding/consistent-navigation.html) and [SC 3.2.6 Consistent Help](https://www.w3.org/WAI/WCAG22/Understanding/consistent-help.html).
 - [ ] **Web view content (only) supports text spacing overrides**
-	- [SC 1.4.12 Text Spacing](https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html) applies only inside a web view in native apps. For embedded HTML content, verify line height up to 1.5x font size, paragraph spacing up to 2x, letter spacing up to 0.12x, and word spacing up to 0.16x. Native UI is governed by Dynamic Type / font scaling instead (see §7).
+	- [SC 1.4.12 Text Spacing](https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html) applies only inside a web view in native apps. For embedded HTML content, verify line height up to 1.5x font size, paragraph spacing up to 2x, letter spacing up to 0.12x, and word spacing up to 0.16x. Native UI is governed by Dynamic Type / font scaling instead.
 
 ---
 
@@ -238,22 +242,22 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 - [ ] **Every touch interaction is reachable and operable with an external keyboard**
 	- Bluetooth keyboards, [iOS Switch Control](https://support.apple.com/en-us/119835), and [Android Switch Access](https://support.google.com/accessibility/android/answer/6122836) all rely on a sensible focus order. Per [SC 2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html), the keyboard interface here means any keyboard or keyboard substitute, not just a physical device.
 - [ ] **A visible focus indicator appears when navigating with a keyboard or switch**
-	- Per [SC 2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) and [SC 2.4.11 Focus Not Obscured (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html).
+	- Per [SC 2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) and [SC 2.4.11 Focus Not Obscured](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html).
 - [ ] **Focus order is annotated for complex layouts when needed**
 	- Default focus order works fine for simple, top-to-bottom screens, so don't override it. Avoid prescribing focus order on screens where it isn't necessary.
 	- For complex layouts (cards with multiple actions, side-by-side groups, custom controls), annotate the intended focus order so engineering knows where overrides are needed. 
 - [ ] **There are no focus traps**
-	- Modals, sheets, and overlays must let users dismiss and return focus to a logical place. Per [SC 2.1.2 No Keyboard Trap](https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html).
+	- Modals, sheets, and overlays must let users dismiss and return focus to a logical place, per [SC 2.1.2 No Keyboard Trap](https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html).
 - [ ] **Custom controls expose proper accessibility actions**
 	- For example, a custom slider should respond to increment/decrement actions, not just drag.
 - [ ] **Keyboard shortcuts don't override platform or assistive tech shortcuts**
 	- Check against VoiceOver, TalkBack, Switch Control, and Voice Control shortcut tables before claiming a key combo. See the [Keyboard shortcut annotation guidance](../tutorials/user-interactions.md#keyboard-shortcut).
 - [ ] **No single-character shortcuts are introduced for new features**
-	- Per [SC 2.1.4 Character Key Shortcuts](https://www.w3.org/WAI/WCAG22/Understanding/character-key-shortcuts.html). If you must, allow users to remap or disable them. Note: long-press gestures and platform-provided accessibility features don't meet WCAG's definition of a keyboard shortcut, so they're not in scope here.
+	- Per [SC 2.1.4 Character Key Shortcuts](https://www.w3.org/WAI/WCAG22/Understanding/character-key-shortcuts.html), if you must, allow users to remap or disable them. **Note:** long-press gestures and platform-provided accessibility features _do not_ meet WCAG's definition of a keyboard shortcut.
 
 ### Annotations that can help
 - [Ordering](https://gh.io/annotation-tutorial-ordering) (Focus Order, Arrow Stop)
-- [Keyboard shortcut (User Interactions)](../tutorials/user-interactions.md#keyboard-shortcut)
+- [User Interactions (Keyboard shortcut)](../tutorials/user-interactions.md#keyboard-shortcut)
 
 ### Resources
 [Mobile keyboard navigation and testing - Workday Accessibility](https://github.com/workday-accessibility/accessibility-eval/blob/main/keyboard.md)
@@ -282,18 +286,18 @@ Mobile users rely heavily on system-level settings to make their device usable. 
 The [Platform function annotations](../tutorials/user-interactions.md#platform-function) flag built-in behaviors that can disorient users if they're not designed carefully.
 
 - [ ] **Loading states have clear visual and programmatic feedback**
-	- Use live accessibility announcements, not just a spinner. Per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+	- Use live accessibility announcements and not just a spinner, per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
 - [ ] **Automatic transitions are avoided or controllable**
-	- System-initiated screen, state, or content changes should be paused, slowed, or dismissible. Common offenders: onboarding carousels, auto-advancing tutorials. Per [SC 3.2.1 On Focus](https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html) and [SC 3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input.html).
+	- System-initiated screen, state, or content changes should be paused, slowed, or dismissible. Common offenders: onboarding carousels, auto-advancing tutorials, per [SC 3.2.1 On Focus](https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html) and [SC 3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input.html).
 - [ ] **Opening external content is announced**
 	- "Opens in browser" or "Opens in a new window" warnings prevent disorientation, especially when leaving the app for the device browser.
 - [ ] **Time limits can be turned off, adjusted, or extended**
-	- Exceptions: real-time events (auctions, live games) or time limits beyond 20 hours. Per [SC 2.2.1 Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html).
+	- Exceptions: real-time events (auctions, live games) or time limits beyond 20 hours, per [SC 2.2.1 Timing Adjustable](https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html).
 - [ ] **Cognitive function tests have an accessible alternative**
-	- CAPTCHA puzzles, math challenges, and memory checks need an alternate path. Per [SC 3.3.8 Accessible Authentication (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html). Device-level passcodes and biometric unlocks are out of scope for this requirement.
+	- CAPTCHA puzzles, math challenges, and memory checks need an alternate path, per [SC 3.3.8 Accessible Authentication](https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html). Device-level passcodes and biometric unlocks are out of scope for this requirement.
 
 ### Annotations that can help
-- [Platform function (User Interactions)](../tutorials/user-interactions.md#platform-function): Loading, Automatic transition, Open in new tab, Time limit, Cognitive puzzle
+- [User Interactions (Platform function)](../tutorials/user-interactions.md#platform-function): Loading, Automatic transition, Open in new tab, Time limit, Cognitive puzzle
 - [Mobile Live Region Announcement](../tutorials/mobile-annotations.md#mobile-live-region-announcement): The Figma component helps annotate live accessibility announcements and is named 'Mobile Live Region Announcement' for cross-platform familiarity.
 
 ---
@@ -301,7 +305,7 @@ The [Platform function annotations](../tutorials/user-interactions.md#platform-f
 ## 13. Notifications and live updates
 
 - [ ] **Status changes are announced via live accessibility announcements**
-	- Search results, form validation, toast notifications, and async updates need an accessibility announcement so screen reader users don't miss them. Per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+	- Search results, form validation, toast notifications, and async updates need an accessibility announcement so screen reader users don't miss them, per [SC 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
 - [ ] **`polite` vs `assertive` is chosen intentionally**
 	- Use `assertive` only for critical info (errors, blocking states). Default to `polite`.
 - [ ] **Off-screen and dynamically appearing content has defined accessibility behavior**
@@ -324,7 +328,7 @@ The [Platform function annotations](../tutorials/user-interactions.md#platform-f
 - [ ] **Tested with Voice Control (iOS) and Voice Access (Android)**
 - [ ] **Tested with an external keyboard or Switch Control / Switch Access**
 
-### Suggested Tools
+### Suggested tools
 
 - [Accessibility Inspector - Apple](https://developer.apple.com/documentation/accessibility/accessibility-inspector)
 - [Accessibility Scanner - Google](https://support.google.com/accessibility/android/answer/6376570)
