@@ -176,6 +176,7 @@ Users often come across content that wasn't built with the platform's native UI 
 
 ## Resources
 
+- [Accessibility Checklist for Mobile](./../checklists/mobile-checklist.md)
 - [​Accessibility documentation - Appt](https://appt.org/en/docs)
 - [Guidance on Applying WCAG 2.2 to Mobile Applications - W3C](https://www.w3.org/TR/wcag2mobile-22/)
 - [Mobile-WCAG Mapping - GitHub Accessibility Audit Guide (Internal Only)](https://github.com/github/accessibility-audit-guide/blob/main/mobile/mobile-wcag-map.md)

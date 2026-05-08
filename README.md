@@ -84,6 +84,7 @@ For GitHub staff, the "Annotation Toolkit" is enabled in the Figma Asset  panel 
 - [The Tiered Model](deep-dives/tiered-model.md) - Prioritizing around time constraints or knowledge gaps
 - [Accessibility Checklist for Designers](checklists/designer-checklist.md)
 - [Accessibility Checklist for Engineers](checklists/engineering-checklist.md)
+- [Accessibility Checklist for Mobile](checklists/mobile-checklist.md) - Accessibility considerations for native iOS and Android experiences
 
 ## Resources
 ### Design system annotations (GitHub Blog series)
